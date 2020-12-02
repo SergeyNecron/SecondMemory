@@ -21,4 +21,7 @@ data class Card(
         this.modifyDate = LocalDateTime.now()
     }
 
+    override fun toString(): String {
+        return "'$title'"
+    }
 }

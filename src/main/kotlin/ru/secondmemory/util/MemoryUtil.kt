@@ -1,49 +1,48 @@
 package ru.secondmemory.util
 
 import ru.secondmemory.model.Card
-import java.util.concurrent.ConcurrentHashMap
+import ru.secondmemory.model.CardType
+import ru.secondmemory.model.CardType.*
+import ru.secondmemory.model.Cards
 
 fun main(args: Array<String>) {
 
-    fun getMapTestCard(): MutableMap<String, MutableMap<String, Card>> {
+    fun getMapTestCard(): MutableMap<CardType, MutableMap<String, Card>> {
+        val cards = Cards()
 
-        val groups: MutableMap<String, MutableMap<String, Card>> = ConcurrentHashMap()
-        val cites: MutableMap<String, Card> = ConcurrentHashMap()
-        val questions: MutableMap<String, Card> = ConcurrentHashMap()
-        val enumeration: MutableMap<String, Card> = ConcurrentHashMap()
-        val verse: MutableMap<String, Card> = ConcurrentHashMap()
-        val words: MutableMap<String, Card> = ConcurrentHashMap()
+        cards.words["resolve [riˈzɑlv]"] = Card("решить")
+        cards.words["deprecated [dˈeprəkɛɪːtɪd]"] = Card("устаревший")
 
-        words["resolve [riˈzɑlv]"] = Card("решить")
-        words["deprecated [dˈeprəkɛɪːtɪd]"] = Card("устаревший")
+        cards.questions["Кто изобретён паровой котёл"] = Card("Д. Папином")
+        cards.questions["Когда изобретён паровой котёл"] = Card("1680 г.")
 
-        questions["Кто изобретён паровой котёл"] = Card("Д. Папином")
-        questions["Когда изобретён паровой котёл"] = Card("1680 г.")
-
-        enumeration["Крупнейшие города России"] = Card("Москва",
+        cards.enumeration["Крупнейшие города России"] = Card("Москва",
                 listOf("Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань .."))
 
-        cites["Москва"] = Card(" 12678")
-        cites["Санкт-Петербург"] = Card("5398")
-        cites["Новосибирск"] = Card(" 1626")
-        cites["Екатеринбург"] = Card(" 1494")
-        cites["Казань"] = Card(" 1257")
+        cards.cites["Москва"] = Card("12678")
+        cards.cites["Санкт-Петербург"] = Card("5398")
+        cards.cites["Новосибирск"] = Card("1626")
+        cards.cites["Екатеринбург"] = Card("1494")
+        cards.cites["Казань"] = Card("1257")
 
-        verse["Cергей Есенин. Заметался пожар голубой"] = Card("Заметался пожар голубой",
+        cards.verse["Cергей Есенин. Заметался пожар голубой"] = Card("Заметался пожар голубой",
                 listOf("Позабылись родимые дали.", "В первый раз я запел про любовь",
                         "В первый раз отрекаюсь скандалить. ..."))
 
-        groups["Слова"] = words
-        groups["Вопрос - Ответ"] = questions
-        groups["Перечисления"] = enumeration
-        groups["Население тыс. человек"] = cites
-        groups["Стихи"] = verse
-
-        return groups
+        return cards.init()
     }
 
-    val mapCard: MutableMap<String, MutableMap<String, Card>> = getMapTestCard()
-    mapCard.keys.toString()
+    val mapCard: MutableMap<CardType, MutableMap<String, Card>> = getMapTestCard()
 
-    println(mapCard.keys.toString())
+    println(WORDS.title)
+    println(mapCard.getValue(WORDS).toString())
+    println(CITES.title)
+    println(mapCard.getValue(CITES).toString())
+    println(ENUMERATION.title)
+    println(mapCard.getValue(ENUMERATION).toString())
+    println(QUESTIONS.title)
+    println(mapCard.getValue(QUESTIONS).toString())
+    println(VERSE.title)
+    println(mapCard.getValue(VERSE).toString())
+//
 }

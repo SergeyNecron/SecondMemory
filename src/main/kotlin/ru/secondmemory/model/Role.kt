@@ -1,5 +1,5 @@
 package ru.secondmemory.model
 
-internal enum class Role {
+enum class Role {
     USER, ADMIN
 }

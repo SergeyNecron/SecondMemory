@@ -1,9 +1,7 @@
 package ru.secondmemory.util
 
-import ru.secondmemory.model.Card
-import ru.secondmemory.model.CardType
+import ru.secondmemory.model.*
 import ru.secondmemory.model.CardType.*
-import ru.secondmemory.model.User
 import java.util.concurrent.ConcurrentHashMap
 
 fun main(args: Array<String>) {
@@ -16,13 +14,13 @@ fun main(args: Array<String>) {
         val enumeration: MutableMap<String, Card> = ConcurrentHashMap()
         val verse: MutableMap<String, Card> = ConcurrentHashMap()
 
-        words["resolve [riˈzɑlv]"] = Card("решить")
-        words["deprecated [dˈeprəkɛɪːtɪd]"] = Card("устаревший")
+        words["resolve"] = WordCard("[riˈzɑlv]", "решить")
+        words["deprecated"] = WordCard("[dˈeprəkɛɪːtɪd]", "устаревший")
 
-        questions["Кто изобретён паровой котёл"] = Card("Д. Папином")
-        questions["Когда изобретён паровой котёл"] = Card("1680 г.")
+        questions["Кто изобретён паровой котёл ?"] = Card("Д. Папином")
+        questions["Когда изобретён паровой котёл ?"] = Card("1680 г.")
 
-        enumeration["Крупнейшие города России"] = Card("Москва",
+        enumeration["Крупнейшие города России"] = ListCard("Москва",
                 listOf("Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань .."))
 
         cites["Москва"] = Card("12678")
@@ -31,7 +29,7 @@ fun main(args: Array<String>) {
         cites["Екатеринбург"] = Card("1494")
         cites["Казань"] = Card("1257")
 
-        verse["Cергей Есенин. Заметался пожар голубой"] = Card("Заметался пожар голубой",
+        verse["Cергей Есенин. Заметался пожар голубой"] = ListCard("Заметался пожар голубой",
                 listOf("Позабылись родимые дали.", "В первый раз я запел про любовь",
                         "В первый раз отрекаюсь скандалить. ..."))
 
@@ -43,16 +41,10 @@ fun main(args: Array<String>) {
     }
 
     fun printCardFile(mapCard: MutableMap<CardType, MutableMap<String, Card>>) {
-        println(WORDS.title)
-        println(mapCard.getValue(WORDS).toString())
-        println(CITES.title)
-        println(mapCard.getValue(CITES).toString())
-        println(ENUMERATION.title)
-        println(mapCard.getValue(ENUMERATION).toString())
-        println(QUESTIONS.title)
-        println(mapCard.getValue(QUESTIONS).toString())
-        println(VERSE.title)
-        println(mapCard.getValue(VERSE).toString())
+        CardType.values().map {
+            println(it.title)
+            println(mapCard.getValue(it).toString().replace("=", ": "))
+        }
     }
 
     fillTestDataCardFile()

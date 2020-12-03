@@ -2,26 +2,26 @@ package ru.secondmemory.model
 
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
- *
- * @author Sergey Muratkin
- * Date: 2020-12-01
+ * Sergey Muratkin
+ * 2020-12-01
  */
 
-data class Card(
-        var title: String = "",
-        var extra: List<String>
+open class Card(
+        var value: String = "",
+        val memoryTime: LocalDateTime,
+        val rememberingTime: List<LocalDateTime> = ArrayList()
 ) : BaseEntity() {
 
-    constructor(title: String) : this(
-            title,
+    constructor(value: String) : this(
+            value,
+            LocalDateTime.now(),
             ArrayList()
-    ) {
-        this.modifyDate = LocalDateTime.now()
-    }
+    )
 
     override fun toString(): String {
-        return "'$title'"
+        return value
     }
 }

@@ -1,6 +1,7 @@
 *.idea
 *lib
 *out
+*target
 
 # Compiled class file
 *.class

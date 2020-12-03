@@ -1,0 +1,29 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+		 http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <display-name>SecondMemory</display-name>
+
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>ru.secondmemory.web.UserServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>cardServlet</servlet-name>
+        <servlet-class>ru.secondmemory.web.CardServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cardServlet</servlet-name>
+        <url-pattern>/cards</url-pattern>
+    </servlet-mapping>
+
+</web-app>

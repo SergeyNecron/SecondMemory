@@ -5,14 +5,12 @@ import ru.secondmemory.model.CardType.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
-val user = User("ivan@mail.ru", "gfgf", true, HashSet(), ConcurrentHashMap())
-
 fun main(args: Array<String>) {
-    fillTestDataCardFile()
-    printCardFile(user.cardFile)
+    printCardFile(fillTestDataCardFile())
 }
 
 fun fillTestDataCardFile(): ConcurrentMap<CardType, MutableMap<String, Card>> {
+    val cardFile: ConcurrentMap<CardType, MutableMap<String, Card>> = ConcurrentHashMap()
     val words: MutableMap<String, Card> = ConcurrentHashMap()
     val cites: MutableMap<String, Card> = ConcurrentHashMap()
     val questions: MutableMap<String, Card> = ConcurrentHashMap()
@@ -38,13 +36,13 @@ fun fillTestDataCardFile(): ConcurrentMap<CardType, MutableMap<String, Card>> {
             listOf("Позабылись родимые дали.", "В первый раз я запел про любовь",
                     "В первый раз отрекаюсь скандалить. ..."))
 
-    user.cardFile[WORDS] = words
-    user.cardFile[CITES] = questions
-    user.cardFile[ENUMERATION] = enumeration
-    user.cardFile[QUESTIONS] = cites
-    user.cardFile[VERSE] = verse
+    cardFile[WORDS] = words
+    cardFile[CITES] = cites
+    cardFile[ENUMERATION] = enumeration
+    cardFile[QUESTIONS] = questions
+    cardFile[VERSE] = verse
 
-    return user.cardFile
+    return cardFile
 }
 
 fun printCardFile(mapCard: MutableMap<CardType, MutableMap<String, Card>>) {

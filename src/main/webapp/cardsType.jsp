@@ -4,6 +4,7 @@
 <style> table, .table td {
     border: 2px solid green;
     padding: 8px;
+    text-align: center
 }</style>
 
 <html>
@@ -12,20 +13,20 @@
 </head>
 <body>
 <section>
-    <h3><a href="index.html">Home</a></h3>
+    <h3><a href="index.html">Назад</a></h3>
     <hr/>
-    <h2>Мои категории:</h2>
     <table class="table">
         <thead>
         <tr>
-            <th>Учить:</th>
+            <th><h2>Мои категории:</h2></th>
         </tr>
         </thead>
-        <%--@elvariable id="cards" type="java.util.List"--%>
-        <c:forEach items="${cards}" var="card">
-            <jsp:useBean id="card" type="ru.secondmemory.model.CardType"/>
+        <%--@elvariable id="cardsType" type="java.util.List"--%>
+        <c:forEach items="${cardsType}" var="cardType">
+            <jsp:useBean id="cardType" type="ru.secondmemory.model.CardType"/>
             <tr>
-                <td>${card.title}</td>
+                <td><a href="cards?cardType=${cardType}">
+                        ${cardType.title}</a></td>
             </tr>
         </c:forEach>
     </table>

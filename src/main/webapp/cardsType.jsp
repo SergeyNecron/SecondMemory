@@ -1,5 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<style> table, .table td {
+    border: 2px solid green;
+    padding: 8px;
+}</style>
 
 <html>
 <head>
@@ -9,13 +14,14 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <hr/>
-    <h2>Мои категории</h2>
-    <table border="1" cellpadding="8" cellspacing="0">
+    <h2>Мои категории:</h2>
+    <table class="table">
         <thead>
         <tr>
             <th>Учить:</th>
         </tr>
         </thead>
+        <%--@elvariable id="cards" type="java.util.List"--%>
         <c:forEach items="${cards}" var="card">
             <jsp:useBean id="card" type="ru.secondmemory.model.CardType"/>
             <tr>

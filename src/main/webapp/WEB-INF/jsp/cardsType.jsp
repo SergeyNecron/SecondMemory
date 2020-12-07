@@ -13,7 +13,7 @@
 </head>
 <body>
 <section>
-    <h3><a href="index.html">Назад</a></h3>
+    <h3><a href="cards?action=home">Назад</a></h3>
     <hr/>
     <table class="table">
         <thead>
@@ -25,7 +25,7 @@
         <c:forEach items="${cardsType}" var="cardType">
             <jsp:useBean id="cardType" type="ru.secondmemory.model.CardType"/>
             <tr>
-                <td><a href="cards?cardType=${cardType}">
+                <td><a href="cards?action=${cardType}">
                         ${cardType.title}</a></td>
             </tr>
         </c:forEach>

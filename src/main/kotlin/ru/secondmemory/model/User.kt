@@ -8,5 +8,4 @@ data class User(
         var enabled: Boolean,
         val roles: Set<Role>,
         val cardFile: ConcurrentMap<CardType, MutableMap<String, Card>>
-
 ) : BaseEntity()

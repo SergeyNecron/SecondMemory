@@ -7,6 +7,7 @@ import ru.secondmemory.dto.CardDto;
 import ru.secondmemory.model.Card;
 import ru.secondmemory.model.CardType;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,39 +23,52 @@ import static ru.secondmemory.util.MemoryUtilKt.fillTestDataCardFile;
 
 public class CardServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(CardServlet.class);
-    final ConcurrentMap<CardType, Map<String, Card>> cardFile = fillTestDataCardFile();
+    private ConcurrentMap<CardType, Map<String, Card>> cardFile;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        cardFile = fillTestDataCardFile();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String cardType = request.getParameter("cardType");
+        String action = request.getParameter("action");
+        final String pathJsp = "/WEB-INF/jsp/";
+        if (action == null) {
+            log.info("get cardFile");
+            request.setAttribute("cardsType", Arrays.asList(CardType.values()));
+            request.getRequestDispatcher(pathJsp + "cardsType.jsp").forward(request, response);
+            return;
+        }
 
-        switch (cardType == null ? "all" : cardType) {
+        switch (action) {
             case "WORDS":
                 setNameSetCards(request, CardType.WORDS);
-                request.getRequestDispatcher("/wordCards.jsp").forward(request, response);
+                request.getRequestDispatcher(pathJsp + "wordCards.jsp").forward(request, response);
                 break;
             case "QUESTIONS":
                 setNameSetCards(request, CardType.QUESTIONS);
-                request.getRequestDispatcher("/cards.jsp").forward(request, response);
+                request.getRequestDispatcher(pathJsp + "cards.jsp").forward(request, response);
                 break;
             case "ENUMERATION":
                 setNameSetCards(request, CardType.ENUMERATION);
-                request.getRequestDispatcher("/listCards.jsp").forward(request, response);
+                request.getRequestDispatcher(pathJsp + "listCards.jsp").forward(request, response);
                 break;
             case "CITES":
                 setNameSetCards(request, CardType.CITES);
-                request.getRequestDispatcher("/cards.jsp").forward(request, response);
+                request.getRequestDispatcher(pathJsp + "cards.jsp").forward(request, response);
                 break;
             case "VERSE":
                 setNameSetCards(request, CardType.VERSE);
-                request.getRequestDispatcher("/listCards.jsp").forward(request, response);
+                request.getRequestDispatcher(pathJsp + "listCards.jsp").forward(request, response);
                 break;
             default:
-                log.info("getAll");
-                request.setAttribute("cardsType", Arrays.asList(CardType.values()));
-                request.getRequestDispatcher("/cardsType.jsp").forward(request, response);
+                log.info("get Home");
+                request.getRequestDispatcher("index.html")
+                        .forward(request, response);
         }
-        log.info("get " + cardType);
+        log.info("get " + action);
 
     }
 

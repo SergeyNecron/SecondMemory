@@ -6,15 +6,17 @@ package ru.secondmemory.model
  */
 
 data class ListCard(
-        var title: String = "",
         var extra: List<String>
-) : Card(title) {
+) : Card(extra[0]) {
+
+    constructor(extra: Array<out String>) : this(extra.drop(1))
 
     override fun toString(): String {
         val filtered = "[]="
-        val value = "$title, ${extra.toString().filterNot { filtered.indexOf(it) > -1 }} "
-        if (value.length > 50)
-            return value.substring(0, 50) + "..."
+        val value = " ${extra.toString().filterNot { filtered.indexOf(it) > -1 }} "
+        val valueSize = 50
+        if (value.length > valueSize)
+            return value.substring(0, valueSize) + "..."
         else
             return value
     }

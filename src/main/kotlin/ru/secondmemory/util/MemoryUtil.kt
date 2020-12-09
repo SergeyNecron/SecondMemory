@@ -2,6 +2,7 @@ package ru.secondmemory.util
 
 import ru.secondmemory.model.*
 import ru.secondmemory.model.CardType.*
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
@@ -9,32 +10,33 @@ fun main(args: Array<String>) {
     printCardFile(fillTestDataCardFile())
 }
 
-fun fillTestDataCardFile(): ConcurrentMap<CardType, MutableMap<String, Card>> {
-    val cardFile: ConcurrentMap<CardType, MutableMap<String, Card>> = ConcurrentHashMap()
-    val words: MutableMap<String, Card> = ConcurrentHashMap()
-    val cites: MutableMap<String, Card> = ConcurrentHashMap()
-    val questions: MutableMap<String, Card> = ConcurrentHashMap()
-    val enumeration: MutableMap<String, Card> = ConcurrentHashMap()
-    val verse: MutableMap<String, Card> = ConcurrentHashMap()
+fun fillTestDataCardFile(): EnumMap<CardType, Cards> {
+    val cardFile: EnumMap<CardType, Cards> = EnumMap(CardType::class.java)
+    val words = Cards()
+    val cites = Cards()
+    val questions = Cards()
+    val enumeration = Cards()
+    val verse = Cards()
 
-    words["resolve"] = WordCard("[riˈzɑlv]", "решить")
-    words["deprecated"] = WordCard("[dˈeprəkɛɪːtɪd]", "устаревший")
+    words.addCard("resolve", "[riˈzɑlv]", "решить")
+    words.addCard("deprecated", "[dˈeprəkɛɪːtɪd]", "устаревший")
 
-    questions["Кто изобретён паровой котёл ?"] = Card("Д. Папином")
-    questions["Когда изобретён паровой котёл ?"] = Card("1680 г.")
+    questions.addCard("Кто изобретён паровой котёл ?", "Д. Папином")
+    questions.addCard("Когда изобретён паровой котёл ?", "1680 г.")
 
-    enumeration["Крупнейшие города России"] = ListCard("Москва",
-            listOf("Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань .."))
+    enumeration.addCard("Крупнейшие города России", "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань ..")
 
-    cites["Москва"] = Card("12678")
-    cites["Санкт-Петербург"] = Card("5398")
-    cites["Новосибирск"] = Card("1626")
-    cites["Екатеринбург"] = Card("1494")
-    cites["Казань"] = Card("1257")
+    cites.addCard("Москва", "12678")
+    cites.addCard("Санкт-Петербург", "5398")
+    cites.addCard("Новосибирск", "1626")
+    cites.addCard("Екатеринбург", "1494")
+    cites.addCard("Казань", "1257")
 
-    verse["Cергей Есенин. Заметался пожар голубой"] = ListCard("Заметался пожар голубой",
-            listOf("Позабылись родимые дали.", "В первый раз я запел про любовь",
-                    "В первый раз отрекаюсь скандалить. ..."))
+    verse.addCard("Cергей Есенин. Заметался пожар голубой",
+            "Заметался пожар голубой",
+            "Позабылись родимые дали",
+            "В первый раз я запел про любовь",
+            "В первый раз отрекаюсь скандалить. ...")
 
     cardFile[WORDS] = words
     cardFile[CITES] = cites
@@ -45,9 +47,9 @@ fun fillTestDataCardFile(): ConcurrentMap<CardType, MutableMap<String, Card>> {
     return cardFile
 }
 
-fun printCardFile(mapCard: MutableMap<CardType, MutableMap<String, Card>>) {
+fun printCardFile(mapCard: EnumMap<CardType, Cards>) {
     CardType.values().map {
         println(it.title)
-        println(mapCard.getValue(it).toString().replace("=", ": "))
+        println(mapCard.getValue(it).toString())
     }
 }

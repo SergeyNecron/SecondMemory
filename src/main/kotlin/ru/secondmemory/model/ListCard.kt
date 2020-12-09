@@ -12,6 +12,10 @@ data class ListCard(
 
     override fun toString(): String {
         val filtered = "[]="
-        return "$title, ${extra.toString().filterNot { filtered.indexOf(it) > -1 }} "
+        val value = "$title, ${extra.toString().filterNot { filtered.indexOf(it) > -1 }} "
+        if (value.length > 50)
+            return value.substring(0, 50) + "..."
+        else
+            return value
     }
 }

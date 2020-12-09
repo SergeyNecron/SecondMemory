@@ -1,14 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<style> table, .table td {
-    border: 2px solid green;
-    padding: 8px;
-    text-align: center
-}</style>
-
 <html>
 <head>
+    <link rel="stylesheet" href="css/style.css">
     <title>Мои категории</title>
 </head>
 <body>

@@ -72,9 +72,9 @@ public class CardServlet extends HttpServlet {
 
     }
 
-    private void setNameSetCards(HttpServletRequest request, CardType words) {
-        request.setAttribute("name", words.getTitle());
-        request.setAttribute("cards", getCardDto(words));
+    private void setNameSetCards(HttpServletRequest request, CardType cardType) {
+        request.setAttribute("name", cardType.getTitle());
+        request.setAttribute("cards", getCardDto(cardType));
     }
 
     @NotNull

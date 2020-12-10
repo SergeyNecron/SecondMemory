@@ -1,12 +1,10 @@
 package ru.secondmemory.web;
 
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.secondmemory.dto.CardDto;
 import ru.secondmemory.model.Card;
 import ru.secondmemory.model.CardType;
-import ru.secondmemory.model.Cards;
 import ru.secondmemory.repository.CardRepository;
 import ru.secondmemory.repository.InMemoryCardRepository;
 
@@ -17,22 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static ru.secondmemory.util.MemoryUtilKt.fillTestDataCardFile;
 
 public class CardServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(CardServlet.class);
-    private EnumMap<CardType, Cards> cardFile;
+
     final String pathJsp = "/WEB-INF/jsp/";
     private CardRepository repository;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        cardFile = fillTestDataCardFile();
         repository = new InMemoryCardRepository();
     }
 
@@ -60,8 +52,7 @@ public class CardServlet extends HttpServlet {
         String key = request.getParameter("key");
         switch (action) {
             case "delete":
-//                repository.delete(type, key);
-                cardFile.get(type).getCards().remove(key);
+                repository.delete(type, key);
                 break;
             case "add":
                 request.setAttribute("action", action);
@@ -75,15 +66,14 @@ public class CardServlet extends HttpServlet {
             case "update":
                 request.setAttribute("action", action);
                 request.setAttribute("key", key);
-
-                Card value = cardFile.get(type).getCards().get(key);
+                Card value = repository.get(type, key);
                 request.setAttribute("newCard", new CardDto(key, value));
 
                 if (type == CardType.ENUMERATION || type == CardType.VERSE) {
                     request.setAttribute("type", type);
                     request.getRequestDispatcher(pathJsp + "addCard.jsp").forward(request, response);
                 }
-//                repository.get(getId(request));
+
                 break;
             case "study":
                 break;
@@ -101,8 +91,10 @@ public class CardServlet extends HttpServlet {
         String typeName = request.getParameter("type");
         log.info("add new " + key + ": " + value);
         CardType type = CardType.valueOf(typeName);
-        //        repository.save(card);
-        cardFile.get(type).addCard(key, value);
+        CardDto cardDto = new CardDto(key, new Card(value));
+//        CardDto cardDto = new CardDto(key , new CardWord(transcript, translation));
+//        CardDto cardDto = new CardDto(key , new CardList(value1, value2, value3));
+        repository.save(type, cardDto);
         switchTypeDispatcher(request, response, type);
     }
 
@@ -122,19 +114,7 @@ public class CardServlet extends HttpServlet {
     private void setPropertiesAndDispatcher(HttpServletRequest request, HttpServletResponse response,
                                             CardType type, String nameJsp) throws ServletException, IOException {
         request.setAttribute("type", type);
-        request.setAttribute("cards", getListCardDto(type));
+        request.setAttribute("cards", repository.getAllByType(type));
         request.getRequestDispatcher(pathJsp + nameJsp).forward(request, response);
-    }
-
-    @NotNull
-    private List<CardDto> getListCardDto(CardType type) {
-
-        Cards cardMap = cardFile.get(type);
-        return cardMap
-                .getCards()
-                .keySet()
-                .stream()
-                .map(it -> new CardDto(it, cardMap.getCards().get(it)))
-                .collect(Collectors.toList());
     }
 }

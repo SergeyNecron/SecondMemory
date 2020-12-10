@@ -17,6 +17,10 @@ class Cards(val cards: MutableMap<String, Card> = ConcurrentHashMap()) {
         cards[args[0]] = CardList(args)
     }
 
+    fun addCard(key: String, card: Card) {
+        cards[key] = card
+    }
+
     override fun toString(): String {
         var rezult = ""
         cards.keys.map { rezult = rezult + it + ": " + cards[it] + "\n" }

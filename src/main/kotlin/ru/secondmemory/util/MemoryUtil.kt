@@ -46,10 +46,6 @@ fun fillTestDataCardFile(): EnumMap<CardType, Cards> {
 }
 
 fun printCardFile(mapCard: EnumMap<CardType, Cards>) {
-//    val cards = mapCard[WORDS]
-//    cards!!.addCard("vdsvds", "vdsvsdv")
-//    mapCard[WORDS] = cards
-    mapCard[WORDS]!!.addCard("fsdfsd", "fsdf454sd")
     CardType.values().map {
         println(it.title)
         println(mapCard.getValue(it).toString())

@@ -8,6 +8,6 @@ import ru.secondmemory.model.Card
  */
 
 data class CardDto(
-        val key: String,
-        val value: Card,
+        var key: String,
+        var value: Card,
 )

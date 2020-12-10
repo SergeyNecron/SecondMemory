@@ -1,7 +1,6 @@
 package ru.secondmemory.model
 
 import java.time.LocalDateTime
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -17,6 +16,12 @@ open class Card(
 
     constructor(value: String) : this(
             value,
+            LocalDateTime.now(),
+            ArrayList()
+    )
+
+    constructor() : this(
+            "",
             LocalDateTime.now(),
             ArrayList()
     )

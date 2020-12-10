@@ -8,7 +8,7 @@
 </head>
 <body>
 <section>
-    <h3><a href="cards?action=home">Назад</a></h3>
+    <h3><a href="index.html">Назад</a></h3>
     <hr/>
     <table class="table">
         <thead>
@@ -16,12 +16,12 @@
             <th><h2>Мои категории:</h2></th>
         </tr>
         </thead>
-        <%--@elvariable id="cardsType" type="java.util.List"--%>
-        <c:forEach items="${cardsType}" var="cardType">
-            <jsp:useBean id="cardType" type="ru.secondmemory.model.CardType"/>
+        <%--@elvariable id="allTypes" type="java.util.List"--%>
+        <c:forEach items="${allTypes}" var="type">
+            <jsp:useBean id="type" type="ru.secondmemory.model.CardType"/>
             <tr>
-                <td><a href="cards?action=${cardType}">
-                        ${cardType.title}</a></td>
+                <td><a href="cards?type=${type}">
+                        ${type.title}</a></td>
             </tr>
         </c:forEach>
     </table>

@@ -3,19 +3,18 @@ package ru.secondmemory.model
 import java.util.concurrent.ConcurrentHashMap
 
 
-class Cards(
-        val cards: MutableMap<String, Card> = ConcurrentHashMap()) {
+class Cards(val cards: MutableMap<String, Card> = ConcurrentHashMap()) {
 
     fun addCard(key: String, value: String) {
         cards[key] = Card(value)
     }
 
     fun addCard(key: String, transcript: String, translation: String) {
-        cards[key] = WordCard(transcript, translation)
+        cards[key] = CardWord(transcript, translation)
     }
 
     fun addCard(vararg args: String) {
-        cards[args[0]] = ListCard(args)
+        cards[args[0]] = CardList(args)
     }
 
     override fun toString(): String {
@@ -24,14 +23,4 @@ class Cards(
         return rezult
     }
 
-
-//    fun ListSection(vararg items: Arrays?) {
-//        this(Arrays.asList<String>(*items))
-//    }
-//    fun getCard(key: String): Card {
-//        return cards.get(key)
-//    }
-//    fun addCard(key: String, value: Card) {
-//        cards[key] = value
-//    }
 }

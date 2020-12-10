@@ -3,8 +3,6 @@ package ru.secondmemory.util
 import ru.secondmemory.model.*
 import ru.secondmemory.model.CardType.*
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentMap
 
 fun main(args: Array<String>) {
     printCardFile(fillTestDataCardFile())
@@ -48,6 +46,10 @@ fun fillTestDataCardFile(): EnumMap<CardType, Cards> {
 }
 
 fun printCardFile(mapCard: EnumMap<CardType, Cards>) {
+//    val cards = mapCard[WORDS]
+//    cards!!.addCard("vdsvds", "vdsvsdv")
+//    mapCard[WORDS] = cards
+    mapCard[WORDS]!!.addCard("fsdfsd", "fsdf454sd")
     CardType.values().map {
         println(it.title)
         println(mapCard.getValue(it).toString())

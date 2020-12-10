@@ -5,7 +5,7 @@ package ru.secondmemory.model
  * 2020-12-03
  */
 
-data class ListCard(
+data class CardList(
         var extra: List<String>
 ) : Card(extra[0]) {
 

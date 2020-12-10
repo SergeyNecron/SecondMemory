@@ -5,7 +5,7 @@ package ru.secondmemory.model
  * Date: 2020-12-01
  */
 
-data class WordCard(
+data class CardWord(
         var transcript: String = "",
         var translation: String = "",
 ) : Card(transcript) {

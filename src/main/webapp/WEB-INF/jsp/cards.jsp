@@ -18,7 +18,7 @@
             <c:if test="${action==null}">
                 <td><b>Добавить карточку</b></td>
                 <td></td>
-                <td><a href="cards?action=add&type=${type}"><img src="img/add.png"></a></td>
+                <td><a href="cards?action=add&type=${type}"><img src="img/add.png" alt="add"></a></td>
                 <td></td>
             </c:if>
             <c:if test="${action=='add'}">
@@ -39,10 +39,12 @@
             <jsp:useBean id="card" type="ru.secondmemory.dto.CardDto"/>
             <tr>
                 <c:if test="${card.key != key}">
-                    <td><a href="cards?action=study&key=${card.key}">${card.key}</a></td>
+                    <td>${card.key}</td>
                     <td>${card.value}</td>
-                    <td><a href="cards?type=${type}&action=update&key=${card.key}"><img src="img/update.png"></a></td>
-                    <td><a href="cards?type=${type}&action=delete&key=${card.key}"><img src="img/delete.png"></a></td>
+                    <td><a href="cards?type=${type}&action=update&key=${card.key}">
+                        <img src="img/update.png" alt="update"></a></td>
+                    <td><a href="cards?type=${type}&action=delete&key=${card.key}">
+                        <img src="img/delete.png" alt="delete"></a></td>
                 </c:if>
                     <%--@elvariable id="key" type="java.lang.String"--%>
                 <c:if test="${action=='update' && card.key == key}">

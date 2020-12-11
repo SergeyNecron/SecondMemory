@@ -13,11 +13,6 @@ data class CardList(
 
     override fun toString(): String {
         val filtered = "[]="
-        val value = " ${extra.toString().filterNot { filtered.indexOf(it) > -1 }} "
-        val valueSize = 50
-        if (value.length > valueSize)
-            return value.substring(0, valueSize) + "..."
-        else
-            return value
+        return " ${extra.toString().filterNot { filtered.indexOf(it) > -1 }} "
     }
 }

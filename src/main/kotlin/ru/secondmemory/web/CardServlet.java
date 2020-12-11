@@ -70,8 +70,13 @@ public class CardServlet extends HttpServlet {
                         request.setAttribute("type", type);
                         request.getRequestDispatcher(pathJsp + "updateCard.jsp").forward(request, response);
                     }
-
                     break;
+                case "get":
+                    request.setAttribute("type", type);
+                    request.setAttribute("card", new CardDto(key, repository.get(type, key)));
+                    request.getRequestDispatcher(pathJsp + "getCard.jsp").forward(request, response);
+                    break;
+
                 case "study":
                     break;
             }

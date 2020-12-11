@@ -46,41 +46,38 @@ public class CardServlet extends HttpServlet {
         if (action == null) {
             log.info("get " + typeName);
             switchTypeDispatcher(request, response, type);
+        } else {
+            //Crud
+            String key = request.getParameter("key");
+            switch (action) {
+                case "delete":
+                    repository.delete(type, key);
+                    break;
+                case "add":
+                    request.setAttribute("action", action);
+                    if (type == CardType.ENUMERATION || type == CardType.VERSE) {
+                        request.setAttribute("type", type);
+                        request.getRequestDispatcher(pathJsp + "addCard.jsp").forward(request, response);
+                    }
+                    break;
+                case "update":
+                    request.setAttribute("action", action);
+                    request.setAttribute("key", key);
+                    Card value = repository.get(type, key);
+                    request.setAttribute("card", new CardDto(key, value));
+
+                    if (type == CardType.ENUMERATION || type == CardType.VERSE) {
+                        request.setAttribute("type", type);
+                        request.getRequestDispatcher(pathJsp + "updateCard.jsp").forward(request, response);
+                    }
+
+                    break;
+                case "study":
+                    break;
+            }
+            switchTypeDispatcher(request, response, type);
+            log.info(action + key);
         }
-
-        //Crud
-        String key = request.getParameter("key");
-        switch (action) {
-            case "delete":
-                repository.delete(type, key);
-                break;
-            case "add":
-                request.setAttribute("action", action);
-                request.setAttribute("newCard", new CardDto("", new Card()));
-
-                if (type == CardType.ENUMERATION || type == CardType.VERSE) {
-                    request.setAttribute("type", type);
-                    request.getRequestDispatcher(pathJsp + "addCard.jsp").forward(request, response);
-                }
-                break;
-            case "update":
-                request.setAttribute("action", action);
-                request.setAttribute("key", key);
-                Card value = repository.get(type, key);
-                request.setAttribute("newCard", new CardDto(key, value));
-
-                if (type == CardType.ENUMERATION || type == CardType.VERSE) {
-                    request.setAttribute("type", type);
-                    request.getRequestDispatcher(pathJsp + "addCard.jsp").forward(request, response);
-                }
-
-                break;
-            case "study":
-                break;
-        }
-        switchTypeDispatcher(request, response, type);
-        log.info(action + key);
-
     }
 
     @Override

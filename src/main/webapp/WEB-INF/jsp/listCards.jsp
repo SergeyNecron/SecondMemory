@@ -15,25 +15,10 @@
     <h2>${type.title}</h2>
     <table class="table">
         <tr>
-            <%--@elvariable id="newCard" type="ru.secondmemory.dto.CardDto"--%>
-            <c:if test="${newCard==null}">
                 <td><b>Добавить карточку</b></td>
                 <td></td>
                 <td><a href="cards?action=add&type=${type}"><img src="img/add.png"></a></td>
                 <td></td>
-            </c:if>
-            <c:if test="${newCard!=null}">
-                <form method="post" action="cards?type=${type}">
-                    <td><input type="text" value="${card.key}" name="key" required></td>
-                    <td><input type="text" value="${card.value}" name="value" required></td>
-                    <td>
-                        <button type="submit">Сохранить</button>
-                    </td>
-                    <td>
-                        <button onclick="window.history.back()" type="button">Cancel</button>
-                    </td>
-                </form>
-            </c:if>
         </tr>
         <%--@elvariable id="cards" type="java.util.List"--%>
         <c:forEach items="${cards}" var="card">

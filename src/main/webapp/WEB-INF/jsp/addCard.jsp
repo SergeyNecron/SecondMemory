@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -10,21 +10,27 @@
 <section>
     <h3><b>Новая карточка</b></h3>
     <hr>
-    <jsp:useBean id="newCard" type="ru.secondmemory.dto.CardDto" scope="request"/>
+
+    <%--@elvariable id="type" type="ru.secondmemory.model.CardType"--%>
     <form method="post" action="cards?type=${type}">
-        <table>
+        <table class="card">
             <tr>
                 <td>
                     <dl>
                         <dt>Ключ:</dt>
-                        <dd><input type="text" value="${newCard.key}" size=40 name="key" required></dd>
+                        <dd>
+                            <input type="text" size=40 name="key" required class="card">
+                        </dd>
                     </dl>
                 </td>
-
+            </tr>
+            <tr>
                 <td>
                     <dl>
-                        <dt>Значение:</dt>
-                        <dd><input type="text" value="${newCard.value}" size=100 name="value" required></dd>
+                        <dt>Значения(перечислить через запятую):</dt>
+                        <dd>
+                            <textarea rows="40" cols="100" name="value" required class="card"></textarea>
+                        </dd>
                     </dl>
                 </td>
             </tr>

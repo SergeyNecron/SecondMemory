@@ -10,21 +10,25 @@
 <section>
     <h3><b>Редактировать</b></h3>
     <hr>
-    <jsp:useBean id="card" type="ru.secondmemory.dto.CardDto" scope="request"/>
+
+    <%--@elvariable id="type" type="ru.secondmemory.model.CardType"--%>
     <form method="post" action="cards?type=${type}">
         <table>
+            <jsp:useBean id="card" type="ru.secondmemory.dto.CardDto" scope="request"/>
             <tr>
                 <td>
                     <dl>
                         <dt>Ключ:</dt>
-                        <dd><input type="text" value="${card.key}" size=40 name="key" required></dd>
+                        <dd><input type="text" value="${card.key}" size=40 name="key" required class="card"></dd>
                     </dl>
                 </td>
-
+            </tr>
+            <tr>
                 <td>
                     <dl>
-                        <dt>Значение:</dt>
-                        <dd><input type="text" value="${card.value}" size=100 name="value" required></dd>
+                        <dt>Значения(перечислить через запятую):</dt>
+                        <dd><textarea rows="40" cols="100" name="value" required class="card">${card.value}</textarea>
+                        </dd>
                     </dl>
                 </td>
             </tr>

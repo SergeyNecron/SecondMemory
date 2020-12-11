@@ -24,8 +24,8 @@
             <c:if test="${action=='add'}">
                 <form method="post" action="cards?type=${type}">
                         <%--@elvariable id="newCard" type="ru.secondmemory.dto.CardDto"--%>
-                    <td><input type="text" value="${newCard.key}" name="key" required></td>
-                    <td><input type="text" value="${newCard.value}" name="value" required></td>
+                    <td><input type="text" name="key" required></td>
+                    <td><input type="text" name="value" required></td>
                     <td>
                         <button type="submit">Сохранить</button>
                     </td>
@@ -48,9 +48,8 @@
                     <%--@elvariable id="key" type="java.lang.String"--%>
                 <c:if test="${action=='update' && card.key == key}">
                     <form method="post" action="cards?type=${type}">
-                            <%--@elvariable id="newCard" type="ru.secondmemory.dto.CardDto"--%>
-                        <td><input type="text" value="${newCard.key}" name="key" required></td>
-                        <td><input type="text" value="${newCard.value}" name="value" required></td>
+                        <td><input type="text" value="${card.key}" name="key" required></td>
+                        <td><input type="text" value="${card.value}" name="value" required></td>
                         <td>
                             <button type="submit">Сохранить</button>
                         </td>

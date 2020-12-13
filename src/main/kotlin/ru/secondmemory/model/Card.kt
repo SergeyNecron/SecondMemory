@@ -9,24 +9,15 @@ import kotlin.collections.ArrayList
  */
 
 open class Card(
-        var value: String = "",
-        val memoryTime: LocalDateTime,
-        val rememberingTime: List<LocalDateTime> = ArrayList()
+        var key: String,
+        var value: String,
+        val type: CardType
 ) : BaseEntity() {
 
-    constructor(value: String) : this(
-            value,
-            LocalDateTime.now(),
-            ArrayList()
-    )
-
-    constructor() : this(
-            "",
-            LocalDateTime.now(),
-            ArrayList()
-    )
+    val memoryTime: LocalDateTime = LocalDateTime.now()
+    val rememberingTime: List<LocalDateTime> = ArrayList()
 
     override fun toString(): String {
-        return value
+        return "$value"
     }
 }

@@ -6,9 +6,10 @@ package ru.secondmemory.model
  */
 
 data class CardWord(
-        var transcript: String = "",
-        var translation: String = "",
-) : Card(transcript) {
+        var _key: String,
+        var transcript: String,
+        var translation: String,
+) : Card(_key, translation, CardType.WORDS) {
 
     override fun toString(): String {
         return "$transcript $translation"

@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CardServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(CardServlet.class);
@@ -76,7 +78,6 @@ public class CardServlet extends HttpServlet {
                     request.setAttribute("card", new CardDto(key, repository.get(type, key)));
                     request.getRequestDispatcher(pathJsp + "getCard.jsp").forward(request, response);
                     break;
-
                 case "study":
                     break;
             }
@@ -87,13 +88,15 @@ public class CardServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
         String key = request.getParameter("key");
         String value = request.getParameter("value");
         String typeName = request.getParameter("type");
         log.info("add new " + key + ": " + value);
         CardType type = CardType.valueOf(typeName);
-        CardDto cardDto = new CardDto(key, new Card(value));
+        final Card card = new Card(key, value, type);
+        CardDto cardDto = new CardDto(key, card);
 //        CardDto cardDto = new CardDto(key , new CardWord(transcript, translation));
 //        CardDto cardDto = new CardDto(key , new CardList(value1, value2, value3));
         repository.save(type, cardDto);

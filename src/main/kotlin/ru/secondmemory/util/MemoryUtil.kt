@@ -5,49 +5,63 @@ import ru.secondmemory.model.CardType.*
 import java.util.*
 
 fun main(args: Array<String>) {
-    printCardFile(fillTestDataCardFile())
+    val enumMapCard: EnumMap<CardType, Cards> = getEnumCardsTestData()
+    printCardFile(enumMapCard)
 }
 
-fun fillTestDataCardFile(): EnumMap<CardType, Cards> {
-    val cardFile: EnumMap<CardType, Cards> = EnumMap(CardType::class.java)
-    val words = Cards()
-    val cites = Cards()
-    val questions = Cards()
-    val enumeration = Cards()
-    val verse = Cards()
+fun getEnumCardsTestData(): EnumMap<CardType, Cards> {
+    val listCard = fillTestDataCardFile()
+    val enumListCard: EnumMap<CardType, MutableList<Card>> = toEnumList(listCard)
+    return toEnumMap(enumListCard)
+}
 
-    words.addCard("resolve", "[riˈzɑlv]", "решить")
-    words.addCard("deprecated", "[dˈeprəkɛɪːtɪd]", "устаревший")
+fun fillTestDataCardFile(): MutableList<Card> {
+    val cardFile: MutableList<Card> = ArrayList<Card>()
+    cardFile.add(CardWord("resolve", "[riˈzɑlv]", "решить"))
+    cardFile.add(CardWord("deprecated", "[dˈeprəkɛɪːtɪd]", "устаревший"))
 
-    questions.addCard("Кто изобретён паровой котёл ?", "Д. Папином")
-    questions.addCard("Когда изобретён паровой котёл ?", "1680 г.")
+    cardFile.add(Card("Кто изобретён паровой котёл ?", "Д. Папином", QUESTIONS))
+    cardFile.add(Card("Когда изобретён паровой котёл ?", "1680 г.", QUESTIONS))
 
-    enumeration.addCard("Крупнейшие города России", "Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань ..")
+    cardFile.add(CardList("Крупнейшие города России", "Москва", ENUMERATION,
+            listOf("Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань ..")))
 
-    cites.addCard("Москва", "12678")
-    cites.addCard("Санкт-Петербург", "5398")
-    cites.addCard("Новосибирск", "1626")
-    cites.addCard("Екатеринбург", "1494")
-    cites.addCard("Казань", "1257")
+    cardFile.add(Card("Москва", "12678", CITES))
+    cardFile.add(Card("Санкт-Петербург", "5398", CITES))
+    cardFile.add(Card("Новосибирск", "1626", CITES))
+    cardFile.add(Card("Екатеринбург", "1494", CITES))
+    cardFile.add(Card("Казань", "1257", CITES))
 
-    verse.addCard("Cергей Есенин. Заметался пожар голубой",
-            "Заметался пожар голубой",
-            "Позабылись родимые дали",
-            "В первый раз я запел про любовь",
-            "В первый раз отрекаюсь скандалить. ...")
-
-    cardFile[WORDS] = words
-    cardFile[CITES] = cites
-    cardFile[ENUMERATION] = enumeration
-    cardFile[QUESTIONS] = questions
-    cardFile[VERSE] = verse
-
+    cardFile.add(CardList("Cергей Есенин", "Заметался пожар голубой", VERSE,
+            listOf("Заметался пожар голубой",
+                    "Позабылись родимые дали",
+                    "В первый раз я запел про любовь",
+                    "В первый раз отрекаюсь скандалить. ...")))
     return cardFile
 }
 
-fun printCardFile(mapCard: EnumMap<CardType, Cards>) {
+private fun printCardFile(mapCard: EnumMap<CardType, Cards>) {
     CardType.values().map {
         println(it.title)
         println(mapCard.getValue(it).toString())
     }
+}
+
+fun toEnumList(listCard: MutableList<Card>): EnumMap<CardType, MutableList<Card>> {
+    val enumListCard: EnumMap<CardType, MutableList<Card>> = EnumMap(CardType::class.java)
+    CardType.values().map {
+        enumListCard[it] = listCard
+                .filter { card -> card.type == it }
+                .toMutableList()
+    }
+    return enumListCard
+}
+
+fun toEnumMap(enumListCard: EnumMap<CardType, MutableList<Card>>): EnumMap<CardType, Cards> {
+    val enumMapCard: EnumMap<CardType, Cards> = EnumMap(CardType::class.java)
+    enumListCard
+            .keys
+            .map { enumMapCard[it] = Cards(enumListCard[it]!!) }
+    return enumMapCard
+
 }

@@ -6,13 +6,14 @@ package ru.secondmemory.model
  */
 
 data class CardList(
+        var _key: String,
+        var _value: String,
+        val _type: CardType,
         var extra: List<String>
-) : Card(extra[0]) {
-
-    constructor(extra: Array<out String>) : this(extra.drop(1))
+) : Card(_key, _value, _type) {
 
     override fun toString(): String {
         val filtered = "[]="
-        return " ${extra.toString().filterNot { filtered.indexOf(it) > -1 }} "
+        return "${extra.toString().filterNot { filtered.indexOf(it) > -1 }.drop(0)} "
     }
 }

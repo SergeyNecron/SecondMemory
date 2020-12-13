@@ -4,11 +4,11 @@ import ru.secondmemory.dto.CardDto
 import ru.secondmemory.model.Card
 import ru.secondmemory.model.CardType
 import ru.secondmemory.model.Cards
-import ru.secondmemory.util.fillTestDataCardFile
+import ru.secondmemory.util.getEnumCardsTestData
 import java.util.*
 
 class InMemoryCardRepository : CardRepository {
-    private val repository: EnumMap<CardType, Cards> = fillTestDataCardFile()
+    private val repository: EnumMap<CardType, Cards> = getEnumCardsTestData()
 
     override fun save(type: CardType, dto: CardDto) {
         repository[type]!!.addCard(dto.key, dto.value)

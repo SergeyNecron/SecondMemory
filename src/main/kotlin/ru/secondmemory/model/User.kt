@@ -7,5 +7,5 @@ data class User(
         var password: String,
         var enabled: Boolean,
         val roles: Set<Role>,
-        val cardFile: EnumMap<CardType, Cards>
+        val cardFile: List<Card>
 ) : BaseEntity()

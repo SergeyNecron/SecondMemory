@@ -4,7 +4,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="css/style.css">
-    <title>Редактировать</title>
+    <title>Просмотр</title>
 </head>
 <body>
 <section>
@@ -16,7 +16,7 @@
         <tr>
             <td>
                 <dl>
-                    <dd class="card">${card.key}"</dd>
+                    <dd class="card">${card.key}</dd>
                 </dl>
             </td>
         </tr>

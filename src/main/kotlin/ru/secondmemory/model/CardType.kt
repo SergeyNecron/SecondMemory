@@ -11,5 +11,6 @@ enum class CardType(val title: String) {
     QUESTIONS("Вопрос - ответ"),
     ENUMERATION("Перечисления"),
     CITES("Население города (тыщ. человек)"),
-    VERSE("Стихи");
+    VERSE("Стихи"),
+    CARD("По умолчанию");
 }

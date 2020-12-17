@@ -14,12 +14,22 @@
     <%--@elvariable id="type" type="ru.secondmemory.model.CardType"--%>
     <form method="post" action="cards?type=${type}">
         <table>
-            <jsp:useBean id="card" type="ru.secondmemory.dto.CardDto" scope="request"/>
+            <jsp:useBean id="card" type="ru.secondmemory.dto.CardListDto" scope="request"/>
             <tr>
                 <td>
                     <dl>
                         <dt>Ключ:</dt>
-                        <dd><input type="text" value="${card.key}" size=40 name="key" required class="card"></dd>
+                        <dd><input type="text" value="${card.key}" name="key" size=40 required class="card"></dd>
+                    </dl>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dl>
+                        <dt>Значение:</dt>
+                        <dd>
+                            <input type="text" value="${card.value}" name="value" size=40 required class="card">
+                        </dd>
                     </dl>
                 </td>
             </tr>
@@ -27,7 +37,7 @@
                 <td>
                     <dl>
                         <dt>Значения(перечислить через запятую):</dt>
-                        <dd><textarea rows="40" cols="100" name="value" required class="card">${card.value}</textarea>
+                        <dd><textarea rows="35" cols="100" name="extra" required class="card">${card.extra}</textarea>
                         </dd>
                     </dl>
                 </td>

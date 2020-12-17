@@ -16,15 +16,17 @@
         <tr>
             <td><b>Добавить карточку</b></td>
             <td></td>
+            <td></td>
             <td><a href="cards?action=add&type=${type}"><img src="img/add.png" alt="add"></a></td>
             <td></td>
         </tr>
         <%--@elvariable id="cards" type="java.util.List"--%>
         <c:forEach items="${cards}" var="card">
-            <jsp:useBean id="card" type="ru.secondmemory.dto.CardDto"/>
+            <jsp:useBean id="card" type="ru.secondmemory.dto.CardListDto"/>
             <tr>
                 <td><a href="cards?type=${type}&action=get&key=${card.key}">${card.key}</a></td>
                 <td>${card.value}</td>
+                <td>${card.extra}</td>
                 <td><a href="cards?type=${type}&action=update&key=${card.key}">
                     <img src="img/update.png" alt="update"></a></td>
                 <td><a href="cards?type=${type}&action=delete&key=${card.key}">

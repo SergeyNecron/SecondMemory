@@ -7,7 +7,14 @@ import ru.secondmemory.model.Card
  * Date: 2020-12-01
  */
 
-data class CardDto(
-        var key: String,
-        var value: Card,
-)
+open class CardDto(
+        val key: String,
+        val value: String
+) {
+    constructor() : this("", "")
+
+    constructor(card: Card) : this(
+            card.key,
+            card.value
+    )
+}

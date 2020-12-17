@@ -12,7 +12,7 @@
     <hr>
     <%--@elvariable id="type" type="ru.secondmemory.model.CardType"--%>
     <table>
-        <jsp:useBean id="card" type="ru.secondmemory.dto.CardDto" scope="request"/>
+        <jsp:useBean id="card" type="ru.secondmemory.dto.CardListDto" scope="request"/>
         <tr>
             <td>
                 <dl>

@@ -27,9 +27,19 @@
             <tr>
                 <td>
                     <dl>
+                        <dt>Значение:</dt>
+                        <dd>
+                            <input type="text" size=40 name="value" required class="card">
+                        </dd>
+                    </dl>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dl>
                         <dt>Значения(перечислить через запятую):</dt>
                         <dd>
-                            <textarea rows="40" cols="100" name="value" required class="card"></textarea>
+                            <textarea rows="35" cols="100" name="extra" required class="card"></textarea>
                         </dd>
                     </dl>
                 </td>

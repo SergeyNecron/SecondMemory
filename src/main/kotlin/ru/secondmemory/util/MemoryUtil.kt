@@ -4,11 +4,6 @@ import ru.secondmemory.model.*
 import ru.secondmemory.model.CardType.*
 import java.util.*
 
-fun main(args: Array<String>) {
-    val enumMapCard: EnumMap<CardType, Cards> = getEnumCardsTestData()
-    printCardFile(enumMapCard)
-}
-
 fun getEnumCardsTestData(): EnumMap<CardType, Cards> {
     val listCard = fillTestDataCardFile()
     val enumListCard: EnumMap<CardType, MutableList<Card>> = toEnumList(listCard)
@@ -16,7 +11,7 @@ fun getEnumCardsTestData(): EnumMap<CardType, Cards> {
 }
 
 fun fillTestDataCardFile(): MutableList<Card> {
-    val cardFile: MutableList<Card> = ArrayList<Card>()
+    val cardFile: MutableList<Card> = ArrayList()
     cardFile.add(CardWord("resolve", "[riˈzɑlv]", "решить"))
     cardFile.add(CardWord("deprecated", "[dˈeprəkɛɪːtɪd]", "устаревший"))
 
@@ -38,13 +33,6 @@ fun fillTestDataCardFile(): MutableList<Card> {
                     "В первый раз я запел про любовь",
                     "В первый раз отрекаюсь скандалить. ...")))
     return cardFile
-}
-
-private fun printCardFile(mapCard: EnumMap<CardType, Cards>) {
-    CardType.values().map {
-        println(it.title)
-        println(mapCard.getValue(it).toString())
-    }
 }
 
 fun toEnumList(listCard: MutableList<Card>): EnumMap<CardType, MutableList<Card>> {

@@ -18,6 +18,6 @@ open class Card(
     val rememberingTime: List<LocalDateTime> = ArrayList()
 
     override fun toString(): String {
-        return "$value"
+        return "$key $value"
     }
 }

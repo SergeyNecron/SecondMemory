@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CardServlet extends HttpServlet {
@@ -37,13 +38,14 @@ public class CardServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         //go to cardFile
-        if (typeName == null && action == null) {
+        if (typeName == null) {
             log.info("get cardFile");
             request.setAttribute("allTypes", Arrays.asList(CardType.values()));
             request.getRequestDispatcher(pathJsp + "cardsType.jsp").forward(request, response);
-            return;
         }
+
         CardType type = CardType.valueOf(typeName);
+        request.setAttribute("type", type);
 
         //go to Cards
         if (action == null) {
@@ -51,30 +53,30 @@ public class CardServlet extends HttpServlet {
             switchTypeDispatcher(request, response, type);
         } else {
             //Crud
-            String key = request.getParameter("key");
+            String key = "";
             switch (action) {
                 case "delete":
+                    key = Objects.requireNonNull(request.getParameter("key"));
                     service.deleteCard(type, key);
                     break;
                 case "add":
                     request.setAttribute("action", action);
                     if (type == CardType.ENUMERATION || type == CardType.VERSE) {
-                        request.setAttribute("type", type);
                         request.getRequestDispatcher(pathJsp + "addListCard.jsp").forward(request, response);
                     }
                     break;
                 case "update":
+                    key = Objects.requireNonNull(request.getParameter("key"));
                     request.setAttribute("action", action);
                     request.setAttribute("key", key);
 
                     if (type == CardType.ENUMERATION || type == CardType.VERSE) {
-                        request.setAttribute("type", type);
                         request.setAttribute("card", service.getCardListDto(type, key));
                         request.getRequestDispatcher(pathJsp + "updateListCard.jsp").forward(request, response);
                     }
                     break;
                 case "get":
-                    request.setAttribute("type", type);
+                    key = Objects.requireNonNull(request.getParameter("key"));
                     request.setAttribute("card", service.getCardDto(type, key));
                     request.getRequestDispatcher(pathJsp + "getCard.jsp").forward(request, response);
                     break;
@@ -89,25 +91,29 @@ public class CardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String key = request.getParameter("key");
-        String typeName = request.getParameter("type");
+        String key = Objects.requireNonNull(request.getParameter("key"));
+        String typeName = Objects.requireNonNull(request.getParameter("type"));
         CardType type = CardType.valueOf(typeName);
+        request.setAttribute("type", type);
         String value;
         switch (type) {
             case WORDS:
-                String transcript = request.getParameter("transcript");
-                String translation = request.getParameter("translation");
+                String transcript = Objects.requireNonNull(request.getParameter("transcript"));
+                String translation = Objects.requireNonNull(request.getParameter("translation"));
                 service.updateOrSaveCard(type, new CardWord(key, transcript, translation));
                 break;
             case QUESTIONS:
             case CITES:
-                value = request.getParameter("value");
+                value = Objects.requireNonNull(request.getParameter("value"));
                 service.updateOrSaveCard(type, new Card(key, value, type));
                 break;
             case ENUMERATION:
             case VERSE:
-                value = request.getParameter("value");
-                List<String> extra = Arrays.stream(request.getParameter("extra").split(","))
+                value = Objects.requireNonNull(request.getParameter("value"));
+                List<String> extra = Arrays.stream(
+                        Objects.requireNonNull(
+                                request.getParameter("extra"))
+                                .split(","))
                         .collect(Collectors.toList());
                 service.updateOrSaveCard(type, new CardList(key, value, type, extra));
                 break;
@@ -120,21 +126,15 @@ public class CardServlet extends HttpServlet {
         switch (type) {
             case WORDS:
                 request.setAttribute("cards", service.getAllCardsWordDtoByType(type));
-                setPropertiesAndDispatcher(request, response, type, "wordCards.jsp");
+                request.getRequestDispatcher(pathJsp + "wordCards.jsp").forward(request, response);
             case QUESTIONS:
             case CITES:
                 request.setAttribute("cards", service.getAllCardsDtoByType(type));
-                setPropertiesAndDispatcher(request, response, type, "cards.jsp");
+                request.getRequestDispatcher(pathJsp + "cards.jsp").forward(request, response);
             case ENUMERATION:
             case VERSE:
                 request.setAttribute("cards", service.getAllCardsListDtoByType(type));
-                setPropertiesAndDispatcher(request, response, type, "listCards.jsp");
+                request.getRequestDispatcher(pathJsp + "listCards.jsp").forward(request, response);
         }
-    }
-
-    private void setPropertiesAndDispatcher(HttpServletRequest request, HttpServletResponse response,
-                                            CardType type, String nameJsp) throws ServletException, IOException {
-        request.setAttribute("type", type);
-        request.getRequestDispatcher(pathJsp + nameJsp).forward(request, response);
     }
 }

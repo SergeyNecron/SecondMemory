@@ -34,7 +34,7 @@ fun fillTestDataCardFile(): MutableList<Card> {
             listOf("Заметался пожар голубой",
                     "Позабылись родимые дали",
                     "В первый раз я запел про любовь",
-                    "В первый раз отрекаюсь скандалить. ...")))
+                    "В первый раз отрекаюсь скандалить.")))
     return cardFile
 }
 
@@ -63,13 +63,22 @@ fun cardToCardDto(card: Card): CardDto {
     )
 }
 
-fun cardListToCardListDto(card: CardList): CardListDto {
+fun cardListToCardListDto(card: CardList, short: Boolean): CardListDto {
     return CardListDto(
             card.key,
             card.value,
             card.type,
-            card.extra.subList(0, 2).toString() + ".."
+            extraToString(card.extra, short)
     )
+}
+
+fun extraToString(extra: List<String>, short: Boolean): String {
+    val filtered = "[]"
+    val maxCountStringExtra = 2
+    val toIndex = if (extra.size < maxCountStringExtra) extra.size else maxCountStringExtra
+    return if (short) {
+        "${extra.subList(0, toIndex).toString().filterNot { filtered.indexOf(it) > -1 }}  .. "
+    } else extra.toString().filterNot { filtered.indexOf(it) > -1 }
 }
 
 fun cardWordToCardWordDto(card: CardWord): CardWordDto {

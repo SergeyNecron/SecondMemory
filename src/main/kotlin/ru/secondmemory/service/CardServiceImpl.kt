@@ -36,7 +36,7 @@ class CardServiceImpl : CardService {
 
     override fun getCardListDto(type: CardType, key: String): CardListDto {
         val card: Card = getCard(type, key)
-        return cardListToCardListDto(card as CardList)
+        return cardListToCardListDto(card as CardList, false)
     }
 
     override fun getAllCardsDtoByType(type: CardType): List<CardDto> {
@@ -51,7 +51,7 @@ class CardServiceImpl : CardService {
 
     override fun getAllCardsListDtoByType(type: CardType): List<CardListDto> {
         return repository.getAllByType(type)
-                .map { cardListToCardListDto(it as CardList) }
+                .map { cardListToCardListDto(it as CardList, true) }
     }
 
     private fun getCard(type: CardType, key: String): Card {

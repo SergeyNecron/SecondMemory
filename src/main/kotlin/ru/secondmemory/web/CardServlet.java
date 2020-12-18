@@ -78,7 +78,7 @@ public class CardServlet extends HttpServlet {
                     break;
                 case "get":
                     key = Objects.requireNonNull(request.getParameter("key"));
-                    request.setAttribute("card", service.getCardDto(type, key));
+                    request.setAttribute("card", service.getCardListDto(type, key));
                     request.getRequestDispatcher(pathJsp + "getCard.jsp").forward(request, response);
                     break;
                 case "study":
@@ -111,11 +111,8 @@ public class CardServlet extends HttpServlet {
             case ENUMERATION:
             case VERSE:
                 value = Objects.requireNonNull(request.getParameter("value"));
-                List<String> extra = Arrays.stream(
-                        Objects.requireNonNull(
-                                request.getParameter("extra"))
-                                .split(","))
-                        .collect(Collectors.toList());
+                String extraString = Objects.requireNonNull(request.getParameter("extra"));
+                List<String> extra = Arrays.stream(extraString.split(",")).collect(Collectors.toList());
                 service.updateOrSaveCard(type, new CardList(key, value, type, extra));
                 break;
         }

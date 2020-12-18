@@ -26,7 +26,7 @@
             <tr>
                 <td><a href="cards?type=${type}&action=get&key=${card.key}">${card.key}</a></td>
                 <td>${card.value}</td>
-                <td>${card.extra}</td>
+                <td width="200">${card.extra}</td>
                 <td><a href="cards?type=${type}&action=update&key=${card.key}">
                     <img src="img/update.png" alt="update"></a></td>
                 <td><a href="cards?type=${type}&action=delete&key=${card.key}">

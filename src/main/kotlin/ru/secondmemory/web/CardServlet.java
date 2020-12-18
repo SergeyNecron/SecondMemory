@@ -57,6 +57,7 @@ public class CardServlet extends HttpServlet {
             switch (action) {
                 case "delete":
                     key = Objects.requireNonNull(request.getParameter("key"));
+                    log.info(action + " " + key);
                     service.deleteCard(type, key);
                     break;
                 case "add":
@@ -84,7 +85,7 @@ public class CardServlet extends HttpServlet {
                     break;
             }
             switchTypeDispatcher(request, response, type);
-            log.info(action + key);
+            log.info(action + " " + key);
         }
     }
 
@@ -118,7 +119,7 @@ public class CardServlet extends HttpServlet {
                 service.updateOrSaveCard(type, new CardList(key, value, type, extra));
                 break;
         }
-        log.info("add new " + key);
+        log.info("add/update " + key);
         switchTypeDispatcher(request, response, type);
     }
 

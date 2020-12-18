@@ -1,5 +1,8 @@
 package ru.secondmemory.util
 
+import ru.secondmemory.dto.CardDto
+import ru.secondmemory.dto.CardListDto
+import ru.secondmemory.dto.CardWordDto
 import ru.secondmemory.model.*
 import ru.secondmemory.model.CardType.*
 import java.util.*
@@ -51,5 +54,29 @@ fun toEnumMap(enumListCard: EnumMap<CardType, MutableList<Card>>): EnumMap<CardT
             .keys
             .map { enumMapCard[it] = Cards(enumListCard[it]!!) }
     return enumMapCard
+}
 
+fun cardToCardDto(card: Card): CardDto {
+    return CardDto(
+            card.key,
+            card.value
+    )
+}
+
+fun cardListToCardListDto(card: CardList): CardListDto {
+    return CardListDto(
+            card.key,
+            card.value,
+            card.type,
+            card.extra.subList(0, 2).toString() + ".."
+    )
+}
+
+fun cardWordToCardWordDto(card: CardWord): CardWordDto {
+    return CardWordDto(
+            card.key,
+            card.transcript,
+            card.translation,
+            card.type
+    )
 }

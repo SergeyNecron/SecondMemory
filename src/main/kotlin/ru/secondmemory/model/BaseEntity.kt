@@ -5,7 +5,11 @@ import java.time.LocalDateTime
 
 abstract class BaseEntity {
 
-    val id: Long = -1
+    var id: Int = -1
     val createDate: LocalDateTime = LocalDateTime.now()
     var modifyDate: LocalDateTime = LocalDateTime.now()
+
+    open fun isNew(): Boolean {
+        return id == -1
+    }
 }

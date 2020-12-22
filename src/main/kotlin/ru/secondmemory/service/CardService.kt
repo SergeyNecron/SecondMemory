@@ -8,17 +8,17 @@ import ru.secondmemory.model.CardType
 
 interface CardService {
 
-    fun updateOrSaveCard(type: CardType, card: Card): CardDto
+    fun save(type: CardType, card: Card): CardDto
 
-    fun deleteCard(type: CardType, key: String): Boolean
+    fun delete(type: CardType, key: String): Boolean
 
-    fun getCardDto(type: CardType, key: String): CardDto
+    fun get(type: CardType, key: String): CardDto
 
-    fun getCardListDto(type: CardType, key: String): CardListDto
+    fun getList(type: CardType, key: String): CardListDto
 
-    fun getAllCardsDtoByType(type: CardType): List<CardDto>
+    fun getAllByType(type: CardType): List<CardDto>
 
-    fun getAllCardsWordDtoByType(type: CardType): List<CardWordDto>
+    fun getAllWordByType(type: CardType): List<CardWordDto>
 
-    fun getAllCardsListDtoByType(type: CardType): List<CardListDto>
+    fun getAllListByType(type: CardType): List<CardListDto>
 }

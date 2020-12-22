@@ -1,7 +1,5 @@
 package ru.secondmemory.model
 
-import java.util.*
-
 data class User(
         val email: String,
         var password: String,

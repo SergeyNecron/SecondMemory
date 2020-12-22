@@ -58,7 +58,7 @@ public class CardServlet extends HttpServlet {
                 case "delete":
                     key = Objects.requireNonNull(request.getParameter("key"));
                     log.info(action + " " + key);
-                    service.deleteCard(type, key);
+                    service.delete(type, key);
                     break;
                 case "add":
                     request.setAttribute("action", action);
@@ -72,13 +72,13 @@ public class CardServlet extends HttpServlet {
                     request.setAttribute("key", key);
 
                     if (type == CardType.ENUMERATION || type == CardType.VERSE) {
-                        request.setAttribute("card", service.getCardListDto(type, key));
+                        request.setAttribute("card", service.getList(type, key));
                         request.getRequestDispatcher(pathJsp + "updateListCard.jsp").forward(request, response);
                     }
                     break;
                 case "get":
                     key = Objects.requireNonNull(request.getParameter("key"));
-                    request.setAttribute("card", service.getCardListDto(type, key));
+                    request.setAttribute("card", service.getList(type, key));
                     request.getRequestDispatcher(pathJsp + "getCard.jsp").forward(request, response);
                     break;
                 case "study":
@@ -101,19 +101,19 @@ public class CardServlet extends HttpServlet {
             case WORDS:
                 String transcript = Objects.requireNonNull(request.getParameter("transcript"));
                 String translation = Objects.requireNonNull(request.getParameter("translation"));
-                service.updateOrSaveCard(type, new CardWord(key, transcript, translation));
+                service.save(type, new CardWord(key, transcript, translation));
                 break;
             case QUESTIONS:
             case CITES:
                 value = Objects.requireNonNull(request.getParameter("value"));
-                service.updateOrSaveCard(type, new Card(key, value, type));
+                service.save(type, new Card(key, value, type));
                 break;
             case ENUMERATION:
             case VERSE:
                 value = Objects.requireNonNull(request.getParameter("value"));
                 String extraString = Objects.requireNonNull(request.getParameter("extra"));
                 List<String> extra = Arrays.stream(extraString.split(",")).collect(Collectors.toList());
-                service.updateOrSaveCard(type, new CardList(key, value, type, extra));
+                service.save(type, new CardList(key, value, type, extra));
                 break;
         }
         log.info("add/update " + key);
@@ -123,15 +123,15 @@ public class CardServlet extends HttpServlet {
     private void switchTypeDispatcher(HttpServletRequest request, HttpServletResponse response, CardType type) throws ServletException, IOException {
         switch (type) {
             case WORDS:
-                request.setAttribute("cards", service.getAllCardsWordDtoByType(type));
+                request.setAttribute("cards", service.getAllWordByType(type));
                 request.getRequestDispatcher(pathJsp + "wordCards.jsp").forward(request, response);
             case QUESTIONS:
             case CITES:
-                request.setAttribute("cards", service.getAllCardsDtoByType(type));
+                request.setAttribute("cards", service.getAllByType(type));
                 request.getRequestDispatcher(pathJsp + "cards.jsp").forward(request, response);
             case ENUMERATION:
             case VERSE:
-                request.setAttribute("cards", service.getAllCardsListDtoByType(type));
+                request.setAttribute("cards", service.getAllListByType(type));
                 request.getRequestDispatcher(pathJsp + "listCards.jsp").forward(request, response);
         }
     }
